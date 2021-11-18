@@ -1,0 +1,355 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "STUDENT AP",
+    "description" : "Student API",
+    "contact" : {
+      "email" : "you@your-company.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/nousinfosystems/STUDENT_API/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "Marksheet",
+    "description" : "Secured Admin-only calls"
+  } ],
+  "paths" : {
+    "/marksheet" : {
+      "get" : {
+        "tags" : [ "Marksheet" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "operationId" : "addInventory",
+        "parameters" : [ {
+          "name" : "Name",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maxLength" : 2,
+            "type" : "string"
+          }
+        }, {
+          "name" : "branch",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "IT", "CS", "MECH", "EE" ]
+          }
+        }, {
+          "name" : "total",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "PASS", "FAIL" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "item created",
+            "content" : {
+              "application/json" : {
+                "example" : [ {
+                  "studentid" : 12,
+                  "studentname" : "James",
+                  "branch" : "IT",
+                  "batch" : 2,
+                  "total" : 569,
+                  "status" : "PASS"
+                }, {
+                  "studentid" : 88,
+                  "studentname" : "James",
+                  "branch" : "IT",
+                  "batch" : 2,
+                  "total" : 569,
+                  "status" : "PASS"
+                } ]
+              }
+            }
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Marksheet" ],
+        "summary" : "Insert marksheet record",
+        "operationId" : "addMarksheet",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/marksheetRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Record has been created",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "Message" : "Record has been inserted to the database"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/marksheet/{id}" : {
+      "get" : {
+        "tags" : [ "Marksheet" ],
+        "summary" : "API to get the marksheet details based on ID",
+        "operationId" : "getMarksheetbyId",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/marksheetRequest"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Marksheet" ],
+        "summary" : "Endpoint to update the marksheet",
+        "operationId" : "updateMarksheetbyId",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/marksheetRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success Response",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "Response1" : {
+                    "value" : {
+                      "Message" : "Record has been updated successfully"
+                    }
+                  },
+                  "Response2" : {
+                    "value" : {
+                      "Message" : "Record is upto date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Marksheet" ],
+        "summary" : "API to get the marksheet details based on ID",
+        "operationId" : "deleteMarksheetbyId",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success Response",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "Message" : "Record has been deleted"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employees" : {
+      "post" : {
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/employee"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "dksjdhksjdh",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "Message" : "Done "
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "employee" : {
+        "type" : "object",
+        "properties" : {
+          "firstname" : {
+            "type" : "string"
+          },
+          "lastname" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "emptype" : {
+            "type" : "string"
+          }
+        }
+      },
+      "manager" : {
+        "maxLength" : 34,
+        "type" : "string"
+      },
+      "worker" : {
+        "maxLength" : 12,
+        "type" : "integer"
+      },
+      "marksheetRequest" : {
+        "required" : [ "batch", "branch", "studentid", "studentname" ],
+        "type" : "object",
+        "properties" : {
+          "studentid" : {
+            "type" : "integer",
+            "example" : 12
+          },
+          "studentname" : {
+            "maxLength" : 2,
+            "type" : "string",
+            "example" : "Jimmy"
+          },
+          "batch" : {
+            "type" : "string",
+            "example" : "second"
+          },
+          "branch" : {
+            "type" : "string",
+            "example" : "IT"
+          },
+          "total" : {
+            "type" : "integer",
+            "example" : 345
+          },
+          "status" : {
+            "type" : "string",
+            "example" : "PASS"
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "branch" : {
+        "name" : "branch",
+        "in" : "query",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "IT", "CS", "MECH", "EE" ]
+        }
+      },
+      "status" : {
+        "name" : "status",
+        "in" : "query",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "PASS", "FAIL" ]
+        }
+      },
+      "total" : {
+        "name" : "total",
+        "in" : "query",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "batch" : {
+        "name" : "batch",
+        "in" : "query",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer"
+        }
+      }
+    }
+  }
+}
